@@ -1,0 +1,4 @@
+GroupId,GroupName,Type,IpProtocol,FromPort,ToPort,IpRanges,Ipv6Ranges,PrefixListIds,UserIdGroupPairs
+sg-0aa44b25730e9a300,launch-wizard-1,Inbound/Ingress,tcp,80,80,0.0.0.0/0,,,
+sg-0aa44b25730e9a300,launch-wizard-1,Inbound/Ingress,tcp,22,22,0.0.0.0/0,,,
+sg-0aa44b25730e9a300,launch-wizard-1,Outbound/Egress,"'-1",,,0.0.0.0/0,,,
