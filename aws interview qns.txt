@@ -1,0 +1,735 @@
+AWS Interview Questions for Java Developer
+1. AWS Fundamentals
+Basic questions
+What is AWS?
+What are the major AWS services you have worked with?
+What is a Region?
+What is an Availability Zone?
+Difference between Region and Availability Zone?
+What is an Edge Location?
+What is the AWS Shared Responsibility Model?
+What is scalability?
+What is elasticity?
+Difference between horizontal and vertical scaling?
+What is high availability?
+What is fault tolerance?
+What is disaster recovery?
+What is the difference between scalability, availability and durability?
+What is AWS IAM?
+What is an IAM user?
+What is an IAM role?
+Difference between IAM user and IAM role?
+What is an IAM policy?
+What is least-privilege access?
+2. EC2
+
+Very important for Java developers.
+
+Questions
+What is EC2?
+Why would you use EC2 for a Java application?
+What is an AMI?
+What is an EC2 instance type?
+Difference between stopping and terminating an EC2 instance?
+What happens to data when an EC2 instance is terminated?
+What is EBS?
+Difference between EBS and instance store?
+What is a Security Group?
+What is a key pair?
+How do you connect to an EC2 Linux server?
+How would you deploy a Spring Boot application on EC2?
+How do you run a JAR continuously on EC2?
+How do you configure environment variables on EC2?
+How would you expose your Spring Boot application to users?
+How do you configure HTTPS?
+How do you monitor an EC2 instance?
+What happens if an EC2 instance crashes?
+How can you automatically replace failed instances?
+What is Auto Scaling?
+Scenario
+
+Your Spring Boot application is running on one EC2 instance. Suddenly the server goes down. How would you design the application so users don't experience downtime?
+
+Expected concepts:
+
+          Load Balancer
+               |
+       -------------------
+       |                 |
+     EC2-1             EC2-2
+       |                 |
+       ------ Auto Scaling
+
+You should talk about:
+
+ALB + Auto Scaling Group + multiple AZs
+
+3. S3
+
+You just started this topic, so this is important.
+
+Questions
+What is S3?
+Why use S3 instead of storing files in a database?
+What is an S3 bucket?
+What is an S3 object?
+What is an object key?
+How do you upload a file to S3 from Spring Boot?
+How do you retrieve a file from S3?
+What is a pre-signed URL?
+Why use a pre-signed URL?
+Difference between S3 and EBS?
+Difference between S3 and EFS?
+What are S3 storage classes?
+What is S3 Standard?
+What is S3 Intelligent-Tiering?
+What is S3 Glacier?
+What is S3 versioning?
+What is an S3 lifecycle policy?
+What is S3 bucket policy?
+Difference between IAM policy and bucket policy?
+How do you make an S3 object accessible only to authorized users?
+How would you store user-uploaded images?
+How would you store application backups?
+How would you automatically move old files to Glacier?
+Real-time scenario
+
+A user uploads a 500 MB video. Should the file go through your Spring Boot server?
+
+A strong answer:
+
+"Preferably no. I would generate a pre-signed S3 URL and allow the client to upload directly to S3. This reduces load and bandwidth usage on the application server."
+
+4. VPC
+
+Very important for experienced developers.
+
+Questions
+What is a VPC?
+Why do we need a VPC?
+What is a subnet?
+Difference between public and private subnet?
+What is an Internet Gateway?
+What is a NAT Gateway?
+Why do we need NAT Gateway?
+Difference between Internet Gateway and NAT Gateway?
+What is a route table?
+What is a Security Group?
+What is a Network ACL?
+Difference between Security Group and NACL?
+What is CIDR?
+What is a public IP?
+What is a private IP?
+How does an EC2 in a private subnet access the internet?
+Can an EC2 in a private subnet receive traffic directly from the internet?
+How does an ALB communicate with private EC2 instances?
+Very common scenario
+Internet
+   |
+   ↓
+Internet Gateway
+   |
+   ↓
+Public Subnet
+   |
+   ↓
+ALB
+   |
+   ↓
+Private Subnet
+   |
+   ↓
+Spring Boot EC2
+   |
+   ↓
+Database
+
+Explain why the application servers are kept in the private subnet.
+
+5. Elastic Load Balancer
+
+You should know this very well.
+
+Questions
+What is a Load Balancer?
+Why do we need a load balancer?
+What is ELB?
+Types of AWS load balancers?
+What is ALB?
+What is NLB?
+Difference between ALB and NLB?
+Which one would you use for REST APIs?
+What is a target group?
+What is a listener?
+What is a health check?
+What happens when an EC2 instance becomes unhealthy?
+Can ALB route traffic based on URL path?
+Can ALB route based on hostname?
+What is sticky session?
+How does ALB work with Auto Scaling?
+Java scenario
+
+Suppose you have:
+
+/order/**
+/payment/**
+/user/**
+
+You could use ALB path-based routing:
+
+                 ALB
+                  |
+        ----------------------
+        |         |          |
+      Order     Payment     User
+      Service   Service     Service
+6. Auto Scaling
+Questions
+What is Auto Scaling?
+What is an Auto Scaling Group?
+What is a Launch Template?
+What is desired capacity?
+What is minimum capacity?
+What is maximum capacity?
+What is scaling out?
+What is scaling in?
+Difference between scaling out and scaling up?
+What metrics can trigger scaling?
+How does Auto Scaling work with ALB?
+What happens when an instance becomes unhealthy?
+How do you deploy a new version to instances managed by ASG?
+7. Route 53
+Questions
+What is Route 53?
+Why do we need Route 53?
+What is DNS?
+What is a hosted zone?
+What is an A record?
+What is an Alias record?
+What is CNAME?
+Difference between A record and CNAME?
+What is health-check based routing?
+What is weighted routing?
+What is latency-based routing?
+What is failover routing?
+What is geolocation routing?
+Scenario
+
+You have:
+
+api.mycompany.com
+
+and want:
+
+api.mycompany.com
+        ↓
+       ALB
+        ↓
+Spring Boot services
+
+Route 53 can resolve the domain to the appropriate AWS endpoint.
+
+8. RDS / Database
+
+For Java developers, this is important.
+
+Questions
+What is RDS?
+Which databases are supported by RDS?
+Difference between RDS and running MySQL on EC2?
+What is Multi-AZ?
+What is a Read Replica?
+Difference between Multi-AZ and Read Replica?
+What is automated backup?
+What is a snapshot?
+How do you connect Spring Boot to RDS?
+Where would you store database credentials?
+How would you handle database failure?
+How would you scale database reads?
+
+Example:
+
+Spring Boot
+     |
+     ↓
+   RDS
+   /  \
+Write  Read Replica
+9. DynamoDB
+Questions
+What is DynamoDB?
+Difference between DynamoDB and RDS?
+What is a table?
+What is an item?
+What is a partition key?
+What is a sort key?
+What is a composite primary key?
+What is a Global Secondary Index?
+What is a Local Secondary Index?
+What is DynamoDB Streams?
+When would you choose DynamoDB over RDS?
+What is eventually consistent read?
+What is strongly consistent read?
+10. Lambda
+
+Very commonly asked.
+
+Questions
+What is AWS Lambda?
+What is serverless?
+How does Lambda work?
+What triggers Lambda?
+What is a Lambda cold start?
+What is Lambda timeout?
+What is Lambda memory?
+How do you deploy Java code to Lambda?
+Lambda vs EC2?
+Can Lambda access S3?
+Can Lambda access RDS?
+How does Lambda work with API Gateway?
+How does Lambda scale?
+What are Lambda environment variables?
+Java example
+Client
+   ↓
+API Gateway
+   ↓
+AWS Lambda
+   ↓
+Java code
+   ↓
+DynamoDB / S3
+11. API Gateway
+Questions
+What is API Gateway?
+Why use API Gateway?
+API Gateway vs ALB?
+How can API Gateway invoke Lambda?
+Can API Gateway call a Spring Boot service?
+How do you secure API Gateway?
+What is throttling?
+What is rate limiting?
+How do you handle authentication?
+How do you monitor API Gateway?
+12. CloudFront
+Questions
+What is CloudFront?
+Why use CloudFront?
+What is a CDN?
+What is an Edge Location?
+How does CloudFront work with S3?
+Why use CloudFront in front of S3?
+How does caching work?
+What is cache invalidation?
+How do you secure S3 when CloudFront is used?
+
+Typical architecture:
+
+User
+ ↓
+CloudFront
+ ↓
+S3
+
+For a React application:
+
+Browser
+   ↓
+CloudFront
+   ↓
+S3
+   ↓
+React static files
+13. CloudWatch
+Questions
+What is CloudWatch?
+What are CloudWatch metrics?
+What are CloudWatch logs?
+What are CloudWatch alarms?
+How do you monitor EC2?
+How do you monitor Lambda?
+How do you send Spring Boot logs to CloudWatch?
+How would you create an alarm when CPU > 80%?
+How can CloudWatch trigger Auto Scaling?
+14. IAM
+
+This is extremely important.
+
+Questions
+What is IAM?
+User vs Role?
+Role vs Policy?
+What is an IAM policy?
+What is an IAM role?
+Why should applications use IAM roles instead of hardcoded AWS credentials?
+What is least privilege?
+What is MFA?
+What is an AWS access key?
+Where should AWS credentials NOT be stored?
+Very important Java question
+
+How does your Spring Boot application authenticate with S3?
+
+Bad answer:
+
+aws.accessKey=xxxxx
+aws.secretKey=xxxxx
+
+Better:
+
+Spring Boot
+     ↓
+EC2 IAM Role
+     ↓
+AWS SDK
+     ↓
+S3
+
+No hardcoded credentials.
+
+15. Secrets Manager
+Questions
+What is AWS Secrets Manager?
+Why use Secrets Manager?
+What is the difference between Secrets Manager and environment variables?
+How would you store database passwords?
+How would Spring Boot retrieve secrets?
+Can Secrets Manager automatically rotate credentials?
+
+Example:
+
+Spring Boot
+     ↓
+Secrets Manager
+     ↓
+DB username/password
+     ↓
+RDS
+16. SQS
+
+Very important for Microservices.
+
+Questions
+What is SQS?
+Why use SQS?
+What is a queue?
+What is a producer?
+What is a consumer?
+Standard Queue vs FIFO Queue?
+What is visibility timeout?
+What is a Dead Letter Queue?
+What is message retention?
+What is long polling?
+How does SQS help decouple microservices?
+
+Example:
+
+Order Service
+      |
+      ↓
+     SQS
+      |
+      ↓
+Notification Service
+
+Instead of:
+
+Order Service
+      |
+      ↓
+Notification Service
+
+The first architecture is more loosely coupled.
+
+17. SNS
+Questions
+What is SNS?
+What is a topic?
+What is a subscriber?
+SNS vs SQS?
+Can SNS send messages to multiple consumers?
+Can SNS send messages to SQS?
+What is pub/sub?
+
+Very important difference:
+
+SNS → Push / Fan-out
+SQS → Queue / Consume
+18. Kafka vs SQS/SNS
+
+Because you know Kafka, interviewers may ask this.
+
+Questions
+Kafka vs SQS?
+Kafka vs SNS?
+When would you choose Kafka?
+When would you choose SQS?
+What is Kafka better at?
+What is SQS better at?
+
+A simple interview answer:
+
+Kafka is generally used for high-throughput event streaming where consumers may independently consume and replay events. SQS is primarily a managed queue for decoupling producers and consumers and distributing work.
+
+19. ECS
+Questions
+What is ECS?
+Why use ECS for Spring Boot?
+ECS vs EC2?
+What is an ECS cluster?
+What is a task?
+What is a task definition?
+What is an ECS service?
+ECS EC2 launch type vs Fargate?
+What is Fargate?
+How do you deploy a Dockerized Spring Boot application to ECS?
+
+Typical architecture:
+
+ALB
+ |
+ ↓
+ECS Service
+ |
+ ├── Spring Boot Container
+ ├── Spring Boot Container
+ └── Spring Boot Container
+20. EKS / Kubernetes
+
+Since you have Kubernetes knowledge, expect these.
+
+Questions
+What is EKS?
+EKS vs ECS?
+Why use Kubernetes?
+What is a Pod?
+What is a Deployment?
+What is a Service?
+What is an Ingress?
+What is a Node?
+What is a Cluster?
+How does EKS expose a Spring Boot service?
+How does Kubernetes perform scaling?
+What is HPA?
+What is rolling deployment?
+21. CI/CD
+
+For a 9-year Java developer, this is very important.
+
+Questions
+How do you deploy a Spring Boot application to AWS?
+How do you implement CI/CD?
+Jenkins → AWS architecture?
+What is CodePipeline?
+What is CodeBuild?
+What is CodeDeploy?
+How do you perform zero-downtime deployment?
+What is blue-green deployment?
+What is rolling deployment?
+How do you rollback a deployment?
+
+A typical pipeline:
+
+Git
+ ↓
+Jenkins
+ ↓
+Maven
+ ↓
+Unit Tests
+ ↓
+Docker Build
+ ↓
+ECR
+ ↓
+ECS/EKS
+22. ECR
+Questions
+What is ECR?
+Why use ECR?
+Docker Hub vs ECR?
+How do you push a Spring Boot Docker image to ECR?
+How does ECS retrieve an image from ECR?
+23. CloudFormation / CDK
+
+Since you have AWS CDK in your skills, expect:
+
+What is Infrastructure as Code?
+What is CloudFormation?
+What is AWS CDK?
+CDK vs CloudFormation?
+Why use IaC?
+What happens when you run cdk deploy?
+What is a CloudFormation stack?
+How do you manage different environments?
+How do you avoid manually creating AWS infrastructure?
+24. AWS + Spring Boot Scenario Questions
+
+These are very important for your level.
+
+Scenario 1
+
+Design a highly available Spring Boot application on AWS.
+
+Expected:
+
+                 Route 53
+                    |
+                    ↓
+                   ALB
+                /       \
+               /         \
+            EC2          EC2
+             |            |
+             └──── ASG ───┘
+                    |
+                   RDS
+
+Mention:
+
+Multiple AZs
+ALB
+Auto Scaling
+RDS Multi-AZ
+CloudWatch
+IAM
+private subnets
+Scenario 2
+
+Your Spring Boot application needs to upload customer documents.
+
+Answer:
+
+React
+ ↓
+Spring Boot
+ ↓
+S3
+
+For large files:
+
+React
+ ↓
+Pre-signed URL
+ ↓
+S3
+Scenario 3
+
+Your application receives 10,000 requests suddenly. What will you do?
+
+Talk about:
+
+Route 53
+ ↓
+ALB
+ ↓
+Auto Scaling
+ ↓
+Multiple Spring Boot instances
+
+And potentially:
+
+caching
+asynchronous processing
+SQS
+database scaling
+CloudWatch monitoring
+Scenario 4
+
+Payment service is temporarily unavailable. Should Order Service fail?
+
+Prefer:
+
+Order Service
+      ↓
+     SQS
+      ↓
+Payment Service
+
+or appropriate resilience mechanisms depending on the workflow.
+
+Talk about:
+
+asynchronous processing
+retries
+circuit breaker
+DLQ
+idempotency
+Scenario 5
+
+Your Spring Boot application needs database credentials. Where do you store them?
+
+AWS Secrets Manager, not Git and not hardcoded in application.properties.
+
+Scenario 6
+
+Your EC2 instance is in a private subnet but needs to download packages from the internet.
+
+Answer:
+
+Private EC2
+    ↓
+Route Table
+    ↓
+NAT Gateway
+    ↓
+Internet Gateway
+    ↓
+Internet
+Scenario 7
+
+Users from India and Australia access your application. How can you reduce latency?
+
+Discuss:
+
+CloudFront
+Route 53 latency-based routing
+multiple regions if required
+regional deployments
+25. Most Important AWS Questions for YOU
+
+Considering your Java + Spring Boot + Microservices + AWS background, I would prioritize these:
+
+🔴 Must know
+EC2
+S3
+IAM
+VPC
+Security Groups
+ALB
+Auto Scaling
+Route 53
+RDS
+CloudWatch
+Lambda
+SQS
+SNS
+Secrets Manager
+ECS/Fargate
+EKS
+CloudFront
+ECR
+CI/CD
+AWS architecture scenarios
+🟠 Next level
+DynamoDB
+API Gateway
+NAT Gateway
+NACL
+Multi-AZ
+Read Replica
+CloudFormation
+CDK
+EventBridge
+X-Ray
+🟢 Advanced
+Multi-region architecture
+Disaster recovery
+Blue-green deployment
+Canary deployment
+Serverless architecture
+Event-driven architecture
+Cost optimization
+AWS security architecture
+Distributed tracing
+Production troubleshooting
